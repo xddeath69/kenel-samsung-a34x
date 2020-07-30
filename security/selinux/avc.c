@@ -1080,8 +1080,15 @@ static noinline int avc_denied(struct selinux_state *state,
 			kfree(tcontext);
 	}
 #endif
+<<<<<<< HEAD
 // ] SEC_SELINUX_PORTING_COMMON
   // SEC_SELINUX_PORTING_COMMON Change to use RKP
+=======
+
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+	if (!(avd->flags & AVD_FLAGS_PERMISSIVE))
+#else
+>>>>>>> d95fa9d9e (selinux: togglable selinux status)
 	if (selinux_enforcing &&
 	    !(avd->flags & AVD_FLAGS_PERMISSIVE))
 		return -EACCES;
