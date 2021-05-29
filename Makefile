@@ -373,6 +373,13 @@ KBUILD_HOSTLDFLAGS  := $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
 KBUILD_HOSTLDLIBS   := $(HOST_LFS_LIBS) $(HOSTLDLIBS)
 
 # Make variables (CC, etc...)
+<<<<<<< HEAD
+=======
+AS		= $(CROSS_COMPILE)as
+LD		= $(CROSS_COMPILE)ld
+LDGOLD		= $(CROSS_COMPILE)ld.gold
+CC		?= $(srctree)/toolchain/clang/host/linux-x86/clang-r383902/bin/clang
+>>>>>>> 081dbc65e (makefile: Do not use samsung default toolchain)
 CPP		= $(CC) -E
 ifneq ($(LLVM),)
 CC		= clang
