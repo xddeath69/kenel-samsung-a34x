@@ -109,34 +109,14 @@ static atomic_t selinux_secmark_refcount = ATOMIC_INIT(0);
 static DEFINE_MUTEX(selinux_sdcardfs_lock);
 // ] SEC_SELINUX_PORTING_COMMON
 
-#ifdef CONFIG_SECURITY_SELINUX_DEVELOP
-#if (defined CONFIG_KDP_CRED && defined CONFIG_SAMSUNG_PRODUCT_SHIP)
-static int selinux_enforcing_boot __kdp_ro_aligned;
-int selinux_enforcing __kdp_ro_aligned;
-#else
-static int selinux_enforcing_boot;
-int selinux_enforcing;
-#endif
 
-static int __init enforcing_setup(char *str)
-{
-	unsigned long enforcing;
-	if (!kstrtoul(str, 0, &enforcing)){
-		// [ SEC_SELINUX_PORTING_COMMON
-#ifdef CONFIG_ALWAYS_ENFORCE
-		selinux_enforcing_boot = 1;
-		selinux_enforcing = 1;
-#else
-		selinux_enforcing_boot = enforcing ? 1 : 0;
-		selinux_enforcing = enforcing ? 1 : 0;
-#endif
 	}
 // ] SEC_SELINUX_PORTING_COMMON
 	return 1;
 }
 __setup("enforcing=", enforcing_setup);
 #else
-#define selinux_enforcing_boot 1
+#define selinux_enforcing_boot 0
 #endif
 
 #ifdef CONFIG_SECURITY_SELINUX_BOOTPARAM
