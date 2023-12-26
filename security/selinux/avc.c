@@ -1298,3 +1298,7 @@ void avc_disable(void)
 		/* kmem_cache_destroy(avc_node_cachep); */
 	}
 }
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+	if (!(avd->flags & AVD_FLAGS_PERMISSIVE))
+#else
+	if (selinux_enforcing &&

@@ -1,4 +1,4 @@
-config SECURITY_SELINUX
+feconfig SECURITY_SELINUX
 	bool "NSA SELinux Support"
 	depends on SECURITY_NETWORK && AUDIT && NET && INET
 	select NETWORK_SECMARK
@@ -111,3 +111,16 @@ config SECURITY_SELINUX_SIDTAB_HASH_BITS
 	  collisions may be viewed at /sys/fs/selinux/ss/sidtab_hash_stats. If
 	  chain lengths are high (e.g. > 20) then selecting a higher value here
 	  will ensure that lookups times are short and stable.
+config SECURITY_SELINUX_ALWAYS_ENFORCE
+	bool "NSA SELinux Always Enforcing"
+	depends on SECURITY_SELINUX_DEVELOP
+	default n
+	help
+	  This option will prevent anything from setting SELinux to permissive.
+
+config SECURITY_SELINUX_ALWAYS_PERMISSIVE
+	bool "NSA SELinux Always Permissive"
+	depends on SECURITY_SELINUX_DEVELOP
+	default n
+	help
+	  This option will prevent anything from setting SELinux to enforcing.

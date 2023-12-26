@@ -116,9 +116,17 @@ static DEFINE_MUTEX(selinux_sdcardfs_lock);
 }
 __setup("enforcing=", enforcing_setup);
 #else
-#define selinux_enforcing_boot 0
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+		selinux_enforcing = 1;
+		selinux_enforcing_boot = 1;
+#elif defined(CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE)
+		selinux_enforcing = 0;
+		selinux_enforcing_boot = 0;
 #endif
-
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+		selinux_enabled = 1;
+#else
+		selinux_enabled = enabled ? 1 : 0;
 #ifdef CONFIG_SECURITY_SELINUX_BOOTPARAM
 #if (defined CONFIG_KDP_CRED && defined CONFIG_SAMSUNG_PRODUCT_SHIP)
 int selinux_enabled __kdp_ro_aligned = CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE;
@@ -7372,8 +7380,12 @@ static __init int selinux_init(void)
 	if (avc_add_callback(selinux_lsm_notifier_avc_callback, AVC_CALLBACK_RESET))
 		panic("SELinux: Unable to register AVC LSM notifier callback\n");
 // [ SEC_SELINUX_PORTING_COMMON
-#ifdef CONFIG_ALWAYS_ENFORCE
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
 		selinux_enforcing_boot = 1;
+		selinux_enforcing = 1;
+#elif defined(CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE)
+		selinux_enforcing_boot = 0;
+		selinux_enforcing = 0;
 #endif
 // ] SEC_SELINUX_PORTING_COMMON
 
