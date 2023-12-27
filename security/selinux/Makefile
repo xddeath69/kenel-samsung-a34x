@@ -3,8 +3,8 @@
 # Makefile for building the SELinux module as part of the kernel tree.
 #
 
+# [ SEC_SELINUX_PORTING_COMMON
 ccflags-y := -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
-<<<<<<< HEAD
 ifeq ($(TARGET_BUILD_VARIANT), eng)
 ifeq ($(SEC_BUILD_OPTION_PRODUCT_SHIP), false)
 ifeq ($(SEC_BUILD_OPTION_SELINUX_ENFORCE),true)
@@ -22,8 +22,6 @@ endif
 endif
 endif
 # ] SEC_SELINUX_PORTING_COMMON
-=======
->>>>>>> 351078e0e (selinux: remove debug and enforce flag)
 
 obj-$(CONFIG_SECURITY_SELINUX) := selinux.o
 
